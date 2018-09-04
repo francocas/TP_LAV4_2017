@@ -15,6 +15,7 @@ export class AgilidadAritmeticaComponent implements OnInit {
   ocultarVerificar: boolean;
   Tiempo: number;
   repetidor:any;
+  Mensajes:string;
   private subscription: Subscription;
   ngOnInit() {
   }
@@ -26,7 +27,9 @@ export class AgilidadAritmeticaComponent implements OnInit {
   }
   NuevoJuego() {
     this.ocultarVerificar=false;
-   this.repetidor = setInterval(()=>{ 
+    this.nuevoJuego.generarJuego();
+    this.Tiempo = 5;
+    this.repetidor = setInterval(()=>{ 
       
       this.Tiempo--;
       console.log("llego", this.Tiempo);
@@ -41,11 +44,38 @@ export class AgilidadAritmeticaComponent implements OnInit {
   }
   verificar()
   {
-    this.ocultarVerificar=false;
+    let resultado:boolean;
+    let mensaje:string;
+    this.ocultarVerificar=true;
     clearInterval(this.repetidor);
-   
+    if(this.nuevoJuego.verificar())
+    {
+      resultado = true;
+      mensaje = "Sos un genio! Ganaste! Tardaste: " +  (5 - this.Tiempo);
+    } else
+    {
+      resultado = false;
+      mensaje = "Perdiste! Resultado: " + this.nuevoJuego.resultado;
+    }
+    this.MostarMensaje(mensaje, resultado);
+  }
 
-   
-  }  
+
+  MostarMensaje(mensaje:string="este es el mensaje",ganador:boolean=false) {
+    this.Mensajes=mensaje;    
+    var x = document.getElementById("snackbar");
+    if(ganador)
+      {
+        x.className = "show Ganador";
+      }else{
+        x.className = "show Perdedor";
+      }
+    var modelo=this;
+    setTimeout(function(){ 
+      x.className = x.className.replace("show", "");
+     }, 3000);
+    console.info("objeto",x);
+  
+   }  
 
 }
