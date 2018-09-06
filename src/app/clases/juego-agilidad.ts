@@ -29,25 +29,30 @@ export class JuegoAgilidad extends  Juego {
 
      public generarJuego() {
          let max:number;
+         let min:number;
          switch(this.dificultad)
          {
              case "Facil":
                 max = 10;
+                min = 1;
                 break;
              case "Normal":
                 max = 25;
+                min = 10;
                 break;
              case "Dificil":
                 max = 50;
+                min = 25;
                 break;
              default:
                 this.dificultad = "Facil";
                 max = 10;
+                min = 1;
                 break;
 
          }
-         this.numeroCalculoUno = Math.floor(Math.random() * (max-1) + 1);
-         this.numeroCalculoDos = Math.floor(Math.random() * (this.numeroCalculoUno -1) + 1);
+         this.numeroCalculoUno = Math.floor(Math.random() * (max-min) + min);
+         this.numeroCalculoDos = Math.floor(Math.random() * (this.numeroCalculoUno -min) + min);
          var operadores = ["+", "-", "*", "/"];
          this.operadorCalculo = operadores[Math.floor(Math.random() * (4 -1) + 1)];
          switch (this.operadorCalculo){
