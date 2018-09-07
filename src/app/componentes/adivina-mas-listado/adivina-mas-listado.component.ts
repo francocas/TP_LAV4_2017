@@ -14,6 +14,7 @@ export class AdivinaMasListadoComponent implements OnInit {
   }
    tomarJuegoTerminado(juego: Juego)
   {
+    console.info(this.listadoParaCompartir);
     this.listadoParaCompartir.push(juego);
    // console.info("en app",this.listadoParaCompartir);
   }

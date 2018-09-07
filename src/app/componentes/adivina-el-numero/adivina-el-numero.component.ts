@@ -14,13 +14,19 @@ export class AdivinaElNumeroComponent implements OnInit {
   Mensajes:string;
   contador:number;
   ocultarVerificar:boolean;
- 
+  Vidas:Array<string>;
   constructor() { 
     this.nuevoJuego = new JuegoAdivina();
+    this.Vidas = new Array<any>();
     console.info("numero Secreto:",this.nuevoJuego.numeroSecreto);  
     this.ocultarVerificar=false;
   }
   generarnumero() {
+    this.Vidas = new Array<any>();
+    for (let index = 0; index <= 5; index++) {
+      this.Vidas.push("♥");  
+    }
+    this.nuevoJuego = new JuegoAdivina();
     this.nuevoJuego.generarnumero();
     this.contador=0;
   }
@@ -36,7 +42,7 @@ export class AdivinaElNumeroComponent implements OnInit {
       this.nuevoJuego.numeroSecreto=0;
 
     }else{
-
+      this.Vidas.pop();
       let mensaje:string;
       switch (this.contador) {
         case 1:
@@ -54,15 +60,14 @@ export class AdivinaElNumeroComponent implements OnInit {
           case 5:
           mensaje=" intentos y nada.";
           break;
-          case 6:
-          mensaje="Afortunado en el amor";
-          break;
       
         default:
-            mensaje="Ya le erraste "+ this.contador+" veces";
+        this.enviarJuego.emit(this.nuevoJuego);
+        this.nuevoJuego.numeroSecreto=0;
+            mensaje="Perdiste :(";
           break;
       }
-      this.MostarMensaje("#"+this.contador+" "+mensaje+" ayuda :"+this.nuevoJuego.retornarAyuda());
+      this.MostarMensaje("#"+this.contador+" "+mensaje+" Ayuda : "+this.nuevoJuego.retornarAyuda());
      
 
     }
